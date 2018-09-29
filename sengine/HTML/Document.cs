@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace sengine.html {
+namespace sengine.HTML {
     public class Document {
         public DOMElement DocumentElement;
         public DOMElement Body;

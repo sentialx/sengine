@@ -1,4 +1,4 @@
-﻿namespace sengine.html {
+﻿namespace sengine.HTML {
     public enum NodeType {
         Element = 1,
         Text = 3,

@@ -1,5 +1,5 @@
-﻿namespace sengine.html {
-    public partial class HTML {
+﻿namespace sengine.HTML {
+    public partial class HTMLParser {
         /// <summary>
         /// Gets tag name from tag code (e.g. <div> is div).
         /// </summary>

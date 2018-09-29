@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace sengine.html {
-    public partial class HTML {
+namespace sengine.HTML {
+    public partial class HTMLParser {
         /// <summary>
         /// Separates a HTML code to tokens.
         /// </summary>

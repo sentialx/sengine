@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace sengine.html {
+﻿namespace sengine.HTML {
     public enum TagType {
         Opening,
         Closing,

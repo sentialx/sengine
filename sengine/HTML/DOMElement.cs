@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace sengine.html
-{
+namespace sengine.HTML {
     public class DOMElement {
         public DOMElement ParentNode;
         public List<DOMElement> Children = new List<DOMElement>();
