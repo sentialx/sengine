@@ -1,24 +1,24 @@
 ﻿namespace sengine.CSS {
     public partial class CSSParser {
-        public static CSSStyleSheet Parse(string code) {
-            var styleSheet = new CSSStyleSheet();
+        public static StyleSheet Parse(string code) {
+            var styleSheet = new StyleSheet();
 
             string capturedText = "";
             string capturedCode = "";
 
-            CSSStyleRule styleRule = new CSSStyleRule();
-            CSSRule rule = new CSSRule();
+            StyleRule styleRule = new StyleRule();
+            StyleDeclaration rule = new StyleDeclaration();
 
             for (int i = 0; i < code.Length; i++) {
                 capturedCode += code[i];
 
                 if (code[i] == '{') {
-                    styleRule = new CSSStyleRule() {
+                    styleRule = new StyleRule() {
                         SelectorText = capturedText.Trim()
                     };
                     capturedText = "";
                 } else if (code[i] == ':') {
-                    rule = new CSSRule() {
+                    rule = new StyleDeclaration() {
                         Property = capturedText.Trim()
                     };
                     capturedText = "";
@@ -27,8 +27,8 @@
                     styleRule.Rules.Add(rule);
                     capturedText = "";
                 } else if (code[i] == '}') {
-                    styleRule.CSSText = capturedCode.Trim();
-                    styleSheet.CSSRules.Add(styleRule);
+                    styleRule.CssText = capturedCode.Trim();
+                    styleSheet.Rules.Add(styleRule);
                     capturedCode = "";
                 } else {
                     capturedText += code[i];
