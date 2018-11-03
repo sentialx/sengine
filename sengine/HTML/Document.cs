@@ -6,5 +6,10 @@ namespace sengine.HTML {
         public DOMElement Body;
         public DOMElement Head;
         public List<DOMElement> Children = new List<DOMElement>();
+
+        public Document(string html) {
+            var elements = Parser.Parse(html);
+            this.Children = elements;
+        }
     }
 }

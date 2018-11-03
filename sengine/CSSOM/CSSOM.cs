@@ -4,11 +4,27 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace sengine.CSSOM {
-    public class Builder {
+namespace sengine {
+    public class CSSOM {
         public static List<string> InheritableProperties = new List<string>() {
             "font-size", "color", "font-weight", "font-style"
         };
+
+        public List<CSSElement> Children;
+        public StyleSheet StyleSheet;
+        public Document HTMLDocument;
+
+        public CSSOM(StyleSheet styleSheet, Document document) {
+            this.HTMLDocument = document;
+            this.StyleSheet = styleSheet;
+            this.Children = this.Build();
+        }
+
+        public CSSOM(string css, Document document) {
+            this.HTMLDocument = document;
+            this.StyleSheet = CSS.Parser.Parse(css);
+            this.Children = this.Build();
+        }
 
         /// <summary>
         /// Builds CSSOM tree. A tree of css elements that could be painted or have a text.
@@ -18,9 +34,13 @@ namespace sengine.CSSOM {
         /// <param name="elements"></param>
         /// <param name="toInherit"></param>
         /// <returns>List of CSSElements</returns>
-        public static List<CSSElement> Build(StyleSheet styleSheet, List<DOMElement> elements, List<StyleDeclaration> toInherit = null) {
+        public List<CSSElement> Build(List<DOMElement> elements = null, List<StyleDeclaration> toInherit = null) {
             if (toInherit == null) {
                 toInherit = new List<StyleDeclaration>();
+            }
+
+            if (elements == null) {
+                elements = this.HTMLDocument.Children;
             }
 
             List<CSSElement> cssElements = new List<CSSElement>();
@@ -28,7 +48,7 @@ namespace sengine.CSSOM {
             foreach (var element in elements) {
                 CSSElement cssElement = new CSSElement();
 
-                foreach (var rule in styleSheet.Rules) {
+                foreach (var rule in this.StyleSheet.Rules) {
                     if (element.TagName != null && element.TagName == rule.SelectorText.ToUpper() || rule.SelectorText == "*" || element.NodeType == NodeType.Text) {
                         cssElement.Rules = rule.Rules;
                         cssElement.NodeValue = element.NodeValue;
@@ -40,7 +60,7 @@ namespace sengine.CSSOM {
                 }
 
                 if (element.Children.Count > 0) {
-                    var children = Build(styleSheet, element.Children, toInherit);
+                    var children = Build(element.Children, toInherit);
 
                     if (cssElement.Rules.Count > 0) {
                         cssElement.Children = children;

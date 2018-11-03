@@ -62,15 +62,11 @@ namespace sengine.HTML {
         /// </summary>
         /// <param name="html"></param>
         /// <returns>Document</returns>
-        public static Document Parse(string html) {
+        public static List<DOMElement> Parse(string html) {
             var tokens = Tokenize(html);
             var elements = BuildTree(tokens);
 
-            Document document = new Document();
-
-            document.Children = elements;
-
-            return document;
+            return elements;
         }
 
         /// <summary>

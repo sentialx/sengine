@@ -1,6 +1,5 @@
-﻿namespace sengine.CSS {
-    public class StyleDeclaration {
-        public string Property;
-        public string Value;
-    }
+﻿using sengine.Interfaces;
+
+namespace sengine.CSS {
+    public class StyleDeclaration: Declaration<string> { }
 }
