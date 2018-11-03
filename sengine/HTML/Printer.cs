@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace sengine.HTML {
-    public class HTMLUtils {
+    public class Utils {
         public static void Print(List<DOMElement> tree, bool printClosing = true) {
             int lastLevel = 0;
             PrintChildren(tree, printClosing, ref lastLevel);

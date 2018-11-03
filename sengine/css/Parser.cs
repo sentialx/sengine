@@ -1,5 +1,5 @@
 ﻿namespace sengine.CSS {
-    public partial class CSSParser {
+    public partial class Parser {
         public static StyleSheet Parse(string code) {
             var styleSheet = new StyleSheet();
 
