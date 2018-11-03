@@ -10,6 +10,14 @@ namespace sengine.CSSOM {
             "font-size", "color", "font-weight", "font-style"
         };
 
+        /// <summary>
+        /// Builds CSSOM tree. A tree of css elements that could be painted or have a text.
+        /// A CSSElement is an element with its corresponding css rules.
+        /// </summary>
+        /// <param name="styleSheet"></param>
+        /// <param name="elements"></param>
+        /// <param name="toInherit"></param>
+        /// <returns>List of CSSElements</returns>
         public static List<CSSElement> Build(StyleSheet styleSheet, List<DOMElement> elements, List<StyleDeclaration> toInherit = null) {
             if (toInherit == null) {
                 toInherit = new List<StyleDeclaration>();
@@ -50,6 +58,11 @@ namespace sengine.CSSOM {
             return cssElements;
         }
 
+        /// <summary>
+        /// Gets list of style declarations that can be inherited based on InheritableProperties list.
+        /// </summary>
+        /// <param name="styles"></param>
+        /// <returns></returns>
         public static List<StyleDeclaration> GetStylesToInherit(List<StyleDeclaration> styles) {
             List<StyleDeclaration> stylesToInherit = new List<StyleDeclaration>();
 

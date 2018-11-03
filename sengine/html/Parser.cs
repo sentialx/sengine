@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace sengine.HTML {
     public partial class Parser {
-        public static List<string> selfClosingTags = new List<string>() {
+        public static List<string> SelfClosingTags = new List<string>() {
             "AREA", "BASE", "BR", "COL", "COMMAND", "EMBED", "HR", "IMG", "INPUT",
             "KEYGEN", "LINK", "MENUITEM", "META", "PARAM", "SOURCE", "TRACK", "WBR"
         };
@@ -226,7 +226,7 @@ namespace sengine.HTML {
                 string tagName = GetTagName(token);
                 if (token[1] == '/') {
                     return TagType.Closing;
-                } else if (selfClosingTags.Contains(tagName)) {
+                } else if (SelfClosingTags.Contains(tagName)) {
                     return TagType.SelfClosing;
                 } else {
                     return TagType.Opening;
