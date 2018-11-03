@@ -1,8 +1,8 @@
 ﻿namespace sengine.HTML {
     public enum TagType {
+        None,
         Opening,
         Closing,
-        SelfClosed,
-        Text
+        SelfClosing,
     }
 }
