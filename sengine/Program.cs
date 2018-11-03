@@ -9,7 +9,7 @@ namespace sengine {
             string css = ".aha { background-color: red; margin: 1px; }";
 
             Document document = HTMLParser.Parse(html);
-            HTMLParser.Print(document.Children);
+            HTMLUtils.Print(document.Children);
 
             var cssom = CSSParser.Parse(css);
 

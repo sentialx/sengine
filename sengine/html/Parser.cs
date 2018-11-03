@@ -188,7 +188,7 @@ namespace sengine.HTML {
                         elements.Add(element);
                     }
 
-                    if (tagType == TagType.Opening) {
+                    if (tagType == TagType.Opening && nodeType == NodeType.Element) {
                         element.TagName = tagName;
 
                         // Set current parent to currently processed element.
