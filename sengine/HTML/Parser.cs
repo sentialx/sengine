@@ -131,9 +131,9 @@ namespace sengine.HTML {
             for (int i = 0; i < tokens.Count; i++) {
                 string token = tokens[i];
 
-                string tagName = GetTagName(token).ToUpper();
-                TagType tagType = GetTagType(token);
-                NodeType nodeType = GetNodeType(token);
+                string tagName = GetTagName(token);
+                TagType tagType = GetTagType(token, tagName);
+                NodeType nodeType = GetNodeType(token, tagName);
 
                 if (tagType == TagType.Closing) {
                     if (parent != null) {
@@ -215,7 +215,7 @@ namespace sengine.HTML {
         /// <param name="source"></param>
         /// <returns>Tag name</returns>
         public static string GetTagName(string source) {
-            return source.Replace("<", "").Replace("/", "").Replace(">", "").Split(" ")[0].Trim();
+            return source.Replace("<", "").Replace("/", "").Replace(">", "").Split(" ")[0].Trim().ToUpper();
         }
 
         /// <summary>
@@ -223,9 +223,8 @@ namespace sengine.HTML {
         /// </summary>
         /// <param name="token"></param>
         /// <returns>Tag type</returns>
-        public static TagType GetTagType(string token) {
+        public static TagType GetTagType(string token, string tagName) {
             if (token[0] == '<' && token[token.Length - 1] == '>') {
-                string tagName = GetTagName(token.ToUpper());
                 if (token[1] == '/') {
                     return TagType.Closing;
                 } else if (SelfClosingTags.Contains(tagName)) {
@@ -242,9 +241,8 @@ namespace sengine.HTML {
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static NodeType GetNodeType(string token) {
+        public static NodeType GetNodeType(string token, string tagName) {
             if (token[0] == '<' && token[token.Length - 1] == '>') {
-                string tagName = GetTagName(token);
                 if (token.StartsWith("<!--")) {
                     return NodeType.Comment;
                 } else if (token[1] == '!') {
