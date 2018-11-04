@@ -185,17 +185,19 @@ namespace sengine.HTML {
                         elements.Add(element);
                     }
 
-                    if (tagType == TagType.Opening && nodeType == NodeType.Element) {
+                    if (nodeType == NodeType.Element) {
                         element.TagName = tagName;
 
                         // Extracts all attributes from token.
                         element.Attributes = GetAttributes(token, tagName);
 
-                        // Set current parent to currently processed element.
-                        parent = element;
-
                         // Collect opened tags, to correctly close other tags.
                         openedTags.Add(tagName);
+
+                        if (tagType == TagType.Opening) {
+                            // Set current parent to currently processed element.
+                            parent = element;
+                        }
                     } else if (nodeType == NodeType.Text) {
                         element.NodeValue = token;
                     } else if (nodeType == NodeType.Comment) {
@@ -223,7 +225,7 @@ namespace sengine.HTML {
         /// <returns>Tag type</returns>
         public static TagType GetTagType(string token) {
             if (token[0] == '<' && token[token.Length - 1] == '>') {
-                string tagName = GetTagName(token);
+                string tagName = GetTagName(token.ToUpper());
                 if (token[1] == '/') {
                     return TagType.Closing;
                 } else if (SelfClosingTags.Contains(tagName)) {
