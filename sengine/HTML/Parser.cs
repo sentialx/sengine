@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace sengine.HTML {
@@ -187,6 +188,8 @@ namespace sengine.HTML {
                     if (tagType == TagType.Opening && nodeType == NodeType.Element) {
                         element.TagName = tagName;
 
+                        element.Attributes = GetAttributes(token, tagName);
+
                         // Set current parent to currently processed element.
                         parent = element;
 
@@ -249,6 +252,44 @@ namespace sengine.HTML {
             } else {
                 return NodeType.Text;
             }
+        }
+
+        /// <summary>
+        /// Extracts attributes from given token.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public static List<Attribute> GetAttributes(string source, string tagName) {
+            List<Attribute> list = new List<Attribute>();
+            Attribute attr = new Attribute();
+
+            bool capturingValue = false;
+            bool insideQuotes = false;
+
+            for (int i = tagName.Length + 1; i < source.Length; i++) {
+                if (source[i] == '=') {
+                    capturingValue = true;
+                } else if (source[i] == '"') {
+                    insideQuotes = !insideQuotes;
+                } else if (capturingValue) {
+                    attr.Value += source[i];
+                } else if (i != source.Length - 1 && source[i] != ' ') {
+                    attr.Name += source[i];
+                }
+
+                if ((source[i] == '"' || source[i] == ' ' || source[i] == '>') && !insideQuotes) {
+                    if (attr.Name != null && attr.Name.Length > 0) {
+                        list.Add(attr);
+                    }
+
+                    attr = new Attribute();
+                    capturingValue = false;
+                    insideQuotes = false;
+                }
+            }
+
+            return list;
         }
     }
 }
