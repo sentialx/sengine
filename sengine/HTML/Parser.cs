@@ -188,6 +188,7 @@ namespace sengine.HTML {
                     if (tagType == TagType.Opening && nodeType == NodeType.Element) {
                         element.TagName = tagName;
 
+                        // Extracts all attributes from token.
                         element.Attributes = GetAttributes(token, tagName);
 
                         // Set current parent to currently processed element.
@@ -280,6 +281,9 @@ namespace sengine.HTML {
 
                 if ((source[i] == '"' || source[i] == ' ' || source[i] == '>') && !insideQuotes) {
                     if (attr.Name != null && attr.Name.Length > 0) {
+                        if (attr.Value != null) {
+                            attr.Value = attr.Value.Trim();
+                        }
                         list.Add(attr);
                     }
 

@@ -6,7 +6,9 @@ namespace sengine.HTML {
         private static ConsoleColor
             TagColor = ConsoleColor.Blue,
             TextColor = ConsoleColor.White,
-            CommentColor = ConsoleColor.DarkGray;
+            CommentColor = ConsoleColor.DarkGray,
+            PropertyColor = ConsoleColor.Cyan,
+            ValueColor = ConsoleColor.Red;
 
         public static void Print(List<DOMElement> tree, bool printClosing = true) {
             int lastLevel = 0;
@@ -26,7 +28,21 @@ namespace sengine.HTML {
                 } else if (node.NodeType == NodeType.Comment) {
                     PrintColored(gap + string.Format("<!--{0}-->", node.NodeValue), CommentColor);
                 } else if (node.NodeType == NodeType.Element) {
-                    PrintColored(string.Format("{0}<{1}>", gap, node.TagName), TagColor);
+                    PrintColored(string.Format("{0}<{1}", gap, node.TagName), TagColor, true);
+
+                    if (node.Attributes.Count > 0) {
+                        foreach (Attribute attr in node.Attributes) {
+                            PrintColored(' ' + attr.Name, PropertyColor, true);
+
+                            if (attr.Value != null) {
+                                PrintColored("=\"", TagColor, true);
+                                PrintColored(attr.Value, ValueColor, true);
+                                PrintColored("\"", TagColor, true);
+                            }
+                        }
+                    }
+
+                    PrintColored(">\n", TagColor, true);
 
                     if (node.Children.Count > 0) {
                         PrintChildren(node.Children, printClosing, ref lastLevel, level + 1);

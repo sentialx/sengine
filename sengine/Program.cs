@@ -7,7 +7,7 @@ namespace sengine {
             string css = "a { background-color: red; margin: 1px; color: red; }";
 
             HTML.Document document = new HTML.Document(html);
-            // HTML.Utils.Print(document.Children);
+            HTML.Utils.Print(document.Children);
 
             var cssom = new CSSOM(css, document);
             var renderTree = new RenderTree(cssom);
